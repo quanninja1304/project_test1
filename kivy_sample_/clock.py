@@ -5,7 +5,7 @@ from kivymd.app import MDApp
 KV = '''
 MDScreen:
     md_bg_color: self.theme_cls.backgroundColor
-
+    space: 10
     MDCard:
         orientation: "vertical"
         padding: 0, 0, 0 , "36dp"
@@ -27,6 +27,18 @@ MDScreen:
 
             MDButtonText:
                 text: "Set theme"
+
+        MDButton:
+            size_hint: .8, .09
+            pos_hint: {"center_x": .5, "center_y": .3}
+    
+            MDButtonText:
+                text: "Sign in"
+                font_name: "Tahoma"
+                pos_hint: {"center_x": .5, "center_y": .5}
+        MDFabButton:
+            pos_hint: {"center_x": .5, "center_y": .3}
+            icon: "pencil-outline"
 '''
 
 

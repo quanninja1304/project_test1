@@ -3,10 +3,16 @@ from kivymd.app import MDApp
 from kivy.lang import Builder 
 from kivy.core.window import Window
 from kivy.properties import ListProperty
-from kivymd.uix.button import MDButton,MDFabButton
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.button import Button
+from kivymd.uix.button import MDButton,MDFabButton,MDButtonText
+from kivymd.uix.screenmanager import ScreenManager
+from kivymd.uix.screen import Screen, MDScreen
 from screen_manager import Screen_Manager
-
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.navigationdrawer import (
+    MDNavigationDrawerItem, MDNavigationDrawerItemTrailingText
+)
+from kivy.properties import StringProperty, ColorProperty
 # Window.size = (350, 600)
 
 # Registering the custom font
@@ -54,6 +60,31 @@ class   AccountScreen(Screen):
 class  SettingsScreen(Screen):
     pass
 
+class DrawerLabel(MDBoxLayout):
+    icon = StringProperty()
+    text = StringProperty()
+
+class DrawerItem(MDNavigationDrawerItem):
+    icon = StringProperty()
+    text = StringProperty()
+    trailing_text = StringProperty()
+    trailing_text_color = ColorProperty()
+
+    _trailing_text_obj = None
+
+    def on_trailing_text(self, instance, value):
+        self._trailing_text_obj = MDNavigationDrawerItemTrailingText(
+            text=value,
+            theme_text_color="Custom",
+            text_color=self.trailing_text_color,
+        )
+        self.add_widget(self._trailing_text_obj)
+
+    def on_trailing_text_color(self, instance, value):
+        self._trailing_text_obj.text_color = value
+
+
+
 
 # Creating the ScreenManager instance
 sm = ScreenManager()
@@ -76,14 +107,6 @@ class MainApp(MDApp):
 
     def build(self):
         return Builder.load_string(Screen_Manager)
-
-    def on_login_press(self):
-        # Implement your login logic here
-        print("Login button pressed")
-
-    def switch_theme_style(self):
-        # Implement your theme switch logic here
-        print("Theme style switched")
 
 if __name__ == "__main__":
     MainApp().run()

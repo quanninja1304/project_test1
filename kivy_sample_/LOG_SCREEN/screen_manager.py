@@ -17,7 +17,7 @@ ScreenManager:
     MDFloatLayout:
         md_bg_color: app.theme_cls.surfaceColor
         MDFloatLayout:
-            size_hint: .4, .08
+            size_hint: None, None
             pos_hint: {"center_x": .7, "center_y": .9}
             
         MDLabel:
@@ -74,13 +74,13 @@ ScreenManager:
                 font_size : "16sp"
         
         Button:
-            text: "Login"
+            text: "Sign in"
             font_name: "Tahoma Regular font"
             size_hint: .8, .09 
             font_size: "18sp"
             pos_hint: {"center_x": .5, "center_y": .3}
             background_color: 0,0,0,0
-            on_press: root.manager.current = 'mainscreen'
+            on_release: root.manager.current = 'mainscreen'
             canvas.before:
                 Color:
                     rgb: app.btn_color
@@ -215,206 +215,140 @@ ScreenManager:
             background_color: 0,0,0,0
             on_press: root.manager.current = 'login' 
 
+<DrawerItem>
+    active_indicator_color: "#e7e4c0"
+
+    MDNavigationDrawerItemLeadingIcon:
+        icon: root.icon
+        theme_icon_color: "Custom"
+        icon_color: "#4a4939"
+
+    MDNavigationDrawerItemText:
+        text: root.text
+        theme_text_color: "Custom"
+        text_color: "#4a4939"
+
+        
+<DrawerLabel>
+    adaptive_height: True
+    padding: "18dp", 0, 0, "12dp"
+
+    MDNavigationDrawerItemLeadingIcon:
+        icon: root.icon
+        theme_icon_color: "Custom"
+        icon_color: "#4a4939"
+        pos_hint: {"center_y": .5}
+
+    MDNavigationDrawerLabel:
+        text: root.text
+        theme_text_color: "Custom"
+        text_color: "#4a4939"
+        pos_hint: {"center_y": .5}
+        padding: "6dp", 0, "16dp", 0
+        theme_line_height: "Custom"
+        line_height: 0
+
+
 <MainScreen>:
     name: 'mainscreen'
-    BoxLayout:
-        orientation: 'horizontal'
+    MDScreen:
+        md_bg_color: self.theme_cls.backgroundColor
 
-        # Left Sidebar
-        BoxLayout:
-            orientation: 'vertical'
-            size_hint_x: 0.1
-            padding: "8dp"
-            spacing: "8dp"
-            canvas.before:
-                Color:
-                    rgba: 0.15, 0.15, 0.25, 1  # Darker background color
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+        MDNavigationLayout:
 
-            # Buttons for different functions (using MDIconButton)
-            MDIconButton:
-                icon: "home"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}  # Centered in the layout
-                pos_hint_y: '.75'
-                on_press: root.manager.current = 'homescreen'
-            MDIconButton:
-                icon: "clock-outline"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                on_press: root.manager.current = 'countdownscreen'
-            MDIconButton:
-                icon: "clipboard-list"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                on_press: root.manager.current = 'todolist'
-            MDIconButton:
-                icon: "note-edit-outline"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                on_press: root.manager.current = 'notes'
-            MDIconButton:
-                icon: "chart-bar"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                on_press: root.manager.current = 'statistics'
-            MDIconButton:
-                icon: "gamepad-variant"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                on_press: root.manager.current = 'games'
-            MDIconButton:
-                icon: "account"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                on_press: root.manager.current = 'account'
-            MDIconButton:
-                icon: "cog"
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                on_press: root.manager.current = 'settings'
+            MDScreenManager:
+                id: screen_manager
+                MDScreen:
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        spacing: 0
+                        padding: 0
+                        # Blue header section
+                        MDBoxLayout:
+                            height: "56dp"
+                            padding: "12dp"
+                            spacing: "12dp"
 
-        # Right Content Area (for switching screens)
-        ScreenManager:
-            
-            id: content_area
-            Screen:
-                name: 'homescreen'
-                Label:
-                    text: "Homescreen"
-                    color: 0.6, 0.6, 0.6, 1
-            Screen:
-                name: 'countdownscreen'
-                Label:
-                    text: "Countdown Timer"
-                    color: 0.6, 0.6, 0.6, 1
-            Screen:
-                name: 'todolist'
-                Label:
-                    text: "To-Do List"
-                    color: 0.6, 0.6, 0.6, 1
-            Screen:
-                name: 'notes'
-                Label:
-                    text: "Notes"
-                    color: 0.6, 0.6, 0.6, 1
-            Screen:
-                name: 'statistics'
-                Label:
-                    text: "Statistics"
-                    color: 0.6, 0.6, 0.6, 1
-            Screen:
-                name: 'games'
-                Label:
-                    text: "Games"
-                    color: 0.6, 0.6, 0.6, 1
-            Screen:
-                name: 'account'
-                Label:
-                    text: "Account Information"
-                    color: 0.6, 0.6, 0.6, 1
-            Screen:
-                name: 'settings'
-                Label:
-                    text: "Settings"
-                    color: 0.6, 0.6, 0.6, 1
+                            MDIconButton:
+                                icon: "menu"
+                                theme_icon_color: "Custom"
+                                size: (80,80)
+                                size_hint: None, None
+                                pos_hint: {"center_y": .95}
+                                on_release: nav_drawer.set_state("toggle")
+                                
+                            MDLabel:
+                                theme_text_color: "Custom"
+                                text_color: "white"
+                                
+            MDNavigationDrawer:
+                id: nav_drawer
+                radius: 0, dp(16), dp(16), 0
 
-<HomeScreen>:
-    name: 'homescreen'
-    BoxLayout:
-        orientation: 'vertical'
-        MDLabel:
-            text: 'Welcome to the Home Screen'
-            halign: 'center'
-        MDButton:
-            text: "Back to login"
-            color: 0,0,0,1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            on_press: root.manager.current = 'login'
+                MDNavigationDrawerMenu:
 
-<CountDownScreen>:
-    name: 'countdownscreen'
-    BoxLayout:
-        orientation: 'vertical'
-        MDLabel:
-            text: 'Countdown Screen'
-            halign: 'center'
-        MDButton:
-            text: "Back to home"
-            color: 0,0,0,1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            on_press: root.manager.current = 'homescreen'
+                    MDNavigationDrawerHeader:
+                        orientation: "vertical"
+                        padding: 0, 0, 0, "12dp"
+                        adaptive_height: True
 
-<ToDoListScreen>:
-    name: 'todolist'
-    BoxLayout:
-        orientation: 'vertical'
-        MDLabel:
-            text: 'To-Do List Screen'
-            halign: 'center'
-        MDButton:
-            text: "Back to home"
-            color: 0,0,0,1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            on_press: root.manager.current = 'homescreen'
+                        MDLabel:
+                            text: "Title"
+                            theme_text_color: "Custom"
+                            theme_line_height: "Custom"
+                            line_height: 0
+                            text_color: "#4a4939"
+                            adaptive_height: True
+                            padding_x: "16dp"
+                            font_style: "Display"
+                            role: "small"
 
+                        MDLabel:
+                            text: "...."
+                            padding_x: "18dp"
+                            adaptive_height: True
+                            font_style: "Title"
+                            role: "large"
 
-<NotesScreen>:
-    name: 'notes'
-    BoxLayout:
-        orientation: 'vertical'
-        MDLabel:
-            text: 'Notes Screen'
-            halign: 'center'
-        MDButton:
-            text: "Back to home"
-            color: 0,0,0,1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            on_press: root.manager.current = 'homescreen'
+                    MDNavigationDrawerDivider:
 
-<StatisticsScreen>:
-    name: 'statistics'
-    BoxLayout:
-        orientation: 'vertical'
-        MDLabel:
-            text: 'Statistics Screen'
-            halign: 'center'
-        MDButton:
-            text: "Back to home"
-            color: 0,0,0,1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            on_press: root.manager.current = 'homescreen'
+                    DrawerItem:
+                        icon: "home"
+                        text: "Home"
 
-<GamesScreen>:
-    name: 'games'
-    BoxLayout:
-        orientation: 'vertical'
-        MDLabel:
-            text: 'Games Screen'
-            halign: 'center'
-        MDButton:
-            text: "Back to home"
-            color: 0,0,0,1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            on_press: root.manager.current = 'homescreen'
+                    DrawerItem:
+                        icon: "clock-outline"
+                        text: "Count down"
+                    
+                    DrawerItem:
+                        icon: "clipboard-list"
+                        text: "To-do-list"
+                    
+                    DrawerItem:
+                        icon: "note-edit-outline"
+                        text: "Note"
 
-<AccountScreen>:
-    name: 'account'
-    BoxLayout:
-        orientation: 'vertical'
-        MDLabel:
-            text: 'Account Screen'
-            halign: 'center'
-        MDButton:
-            text: "Back to home"
-            color: 0,0,0,1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            on_press: root.manager.current = 'homescreen'
-<SettingsScreen>:
-    name: 'settings'
-    BoxLayout:
-        orientation: 'vertical'
-        md_bg_color: (1, 1, 1, 1)
-        MDLabel:
-            text: 'Settings Screen'
-            halign: 'center'
-        MDButton:
-            text: "Back to home"
-            color: 0,0,0,1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
-            on_press: root.manager.current = 'homescreen'
+                    DrawerItem:
+                        icon: "chart-bar"
+                        text: "Statistics"
+                        
+                    DrawerItem:
+                        icon: "gamepad-variant"
+                        text: "Game"
+                        
+                    DrawerItem:
+                        icon: "account"
+                        text: "Profile"
+                
+                    MDNavigationDrawerDivider:
+                        size_hint_y: None
+                        height: "1dp"
+                                            
+                    DrawerItem:
+                        icon: "cog"
+                        text: "Settings"
+                        
+                    DrawerItem:
+                        icon: "logout"
+                        text: "Log out"
 """
