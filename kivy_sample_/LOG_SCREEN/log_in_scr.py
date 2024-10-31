@@ -83,15 +83,11 @@ class DrawerItem(MDNavigationDrawerItem):
     def on_trailing_text_color(self, instance, value):
         self._trailing_text_obj.text_color = value
 
-
-
-
 # Creating the ScreenManager instance
 sm = ScreenManager()
 sm.add_widget(LoginScreen(name='login'))   
 sm.add_widget(SignUpScreen(name='signup'))
 sm.add_widget(MainScreen(name='mainscreen'))
-
 sm.add_widget(HomeScreen(name='homescreen'))
 sm.add_widget(CountDownScreen(name='countdownscreen'))
 sm.add_widget(ToDoListScreen(name='todolist'))
